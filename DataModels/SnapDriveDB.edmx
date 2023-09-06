@@ -1,0 +1,986 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="SnapDriveDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AdminUserRoles">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RoleName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RenterID" Type="int" />
+          <Property Name="CarListingID" Type="int" />
+          <Property Name="BookingDate" Type="datetime" />
+          <Property Name="RentalPeriodStart" Type="datetime" />
+          <Property Name="RentalPeriodEnd" Type="datetime" />
+          <Property Name="TotalCost" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PaymentStatus" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarListing">
+          <Key>
+            <PropertyRef Name="CarListingID" />
+          </Key>
+          <Property Name="CarListingID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarOwnerID" Type="int" />
+          <Property Name="Make" Type="varchar" MaxLength="50" />
+          <Property Name="Model" Type="varchar" MaxLength="50" />
+          <Property Name="Year" Type="int" />
+          <Property Name="Mileage" Type="int" />
+          <Property Name="RentalPrice" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="AvailabilitySchedule" Type="varchar" MaxLength="255" />
+          <Property Name="LocationLatitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="LocationLongitude" Type="decimal" Precision="11" Scale="8" />
+          <Property Name="Description" Type="varchar" MaxLength="1000" />
+          <Property Name="CarImage" Type="varchar" MaxLength="100" />
+          <Property Name="Status" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CarOwner">
+          <Key>
+            <PropertyRef Name="CarOwnerID" />
+          </Key>
+          <Property Name="CarOwnerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DriverLicenseNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="100" />
+          <Property Name="BankAccountDetails" Type="varchar" MaxLength="255" />
+          <Property Name="VerificationStatus" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SenderID" Type="int" />
+          <Property Name="RecipientID" Type="int" />
+          <Property Name="MessageContent" Type="text" />
+          <Property Name="Timestamp" Type="datetime" />
+          <Property Name="MessageStatus" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+          </Key>
+          <Property Name="InsuranceID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="int" />
+          <Property Name="CoverageDetails" Type="text" />
+          <Property Name="Cost" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="StartDate" Type="datetime" />
+          <Property Name="EndDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LocationGeoData">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Latitude" Type="decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="decimal" Precision="11" Scale="8" />
+          <Property Name="City" Type="varchar" MaxLength="100" />
+          <Property Name="RegionState" Type="varchar" MaxLength="100" />
+          <Property Name="Country" Type="varchar" MaxLength="100" />
+          <Property Name="Timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="LogsAuditTrails">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="Action" Type="text" />
+          <Property Name="Timestamp" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BookingID" Type="int" />
+          <Property Name="Amount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="PaymentDate" Type="datetime" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="100" />
+          <Property Name="TransactionID" Type="varchar" MaxLength="255" />
+          <Property Name="PaymentStatus" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="RenterID" />
+          </Key>
+          <Property Name="RenterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserID" Type="int" />
+          <Property Name="DriverLicenseNumber" Type="varchar" MaxLength="20" />
+          <Property Name="PaymentMethod" Type="varchar" MaxLength="100" />
+          <Property Name="BankAccountDetails" Type="varchar" MaxLength="255" />
+          <Property Name="VerificationStatus" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReviewRating">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CarOwnerID" Type="int" />
+          <Property Name="RenterID" Type="int" />
+          <Property Name="CarListingID" Type="int" />
+          <Property Name="Rating" Type="int" />
+          <Property Name="Comment" Type="text" />
+          <Property Name="Date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FirstName" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="50" />
+          <Property Name="PhoneNumber" Type="varchar" MaxLength="15" />
+          <Property Name="Address" Type="varchar" MaxLength="255" />
+          <Property Name="ProfilePicture" Type="varchar" MaxLength="100" />
+          <Property Name="RegistrationDate" Type="datetime" />
+          <Property Name="UserType" Type="varchar" MaxLength="30" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__Booking__CarList__59FA5E80">
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarListing">
+              <PropertyRef Name="CarListingID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="CarListingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__RenterI__59063A47">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RenterID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="RenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarListin__CarOw__5629CD9C">
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="0..1" />
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwner">
+              <PropertyRef Name="CarOwnerID" />
+            </Principal>
+            <Dependent Role="CarListing">
+              <PropertyRef Name="CarOwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarOwner__UserID__52593CB8">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarOwner">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Communica__Recip__68487DD7">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Communication" Type="Self.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="RecipientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Communica__Sende__6754599E">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Communication" Type="Self.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insurance__Booki__6477ECF3">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="Insurance" Type="Self.Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="Insurance">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LogsAudit__UserI__6EF57B66">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="LogsAuditTrails" Type="Self.LogsAuditTrails" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LogsAuditTrails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Booking__5CD6CB2B">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renter__UserID__4BAC3F29">
+          <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+          <End Role="Renter" Type="Self.Renter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__CarLi__619B8048">
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarListing">
+              <PropertyRef Name="CarListingID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="CarListingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__CarOw__5FB337D6">
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwner">
+              <PropertyRef Name="CarOwnerID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="CarOwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__Rente__60A75C0F">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RenterID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="RenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SnapDriveDBModelStoreContainer">
+          <EntitySet Name="AdminUserRoles" EntityType="Self.AdminUserRoles" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Booking" EntityType="Self.Booking" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarListing" EntityType="Self.CarListing" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CarOwner" EntityType="Self.CarOwner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Communication" EntityType="Self.Communication" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Insurance" EntityType="Self.Insurance" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LocationGeoData" EntityType="Self.LocationGeoData" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LogsAuditTrails" EntityType="Self.LogsAuditTrails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Payment" EntityType="Self.Payment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Renter" EntityType="Self.Renter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReviewRating" EntityType="Self.ReviewRating" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Booking__CarList__59FA5E80" Association="Self.FK__Booking__CarList__59FA5E80">
+            <End Role="CarListing" EntitySet="CarListing" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__RenterI__59063A47" Association="Self.FK__Booking__RenterI__59063A47">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="Booking" EntitySet="Booking" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarListin__CarOw__5629CD9C" Association="Self.FK__CarListin__CarOw__5629CD9C">
+            <End Role="CarOwner" EntitySet="CarOwner" />
+            <End Role="CarListing" EntitySet="CarListing" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarOwner__UserID__52593CB8" Association="Self.FK__CarOwner__UserID__52593CB8">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarOwner" EntitySet="CarOwner" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Communica__Recip__68487DD7" Association="Self.FK__Communica__Recip__68487DD7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Communication" EntitySet="Communication" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Communica__Sende__6754599E" Association="Self.FK__Communica__Sende__6754599E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Communication" EntitySet="Communication" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insurance__Booki__6477ECF3" Association="Self.FK__Insurance__Booki__6477ECF3">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Insurance" EntitySet="Insurance" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LogsAudit__UserI__6EF57B66" Association="Self.FK__LogsAudit__UserI__6EF57B66">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LogsAuditTrails" EntitySet="LogsAuditTrails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Booking__5CD6CB2B" Association="Self.FK__Payment__Booking__5CD6CB2B">
+            <End Role="Booking" EntitySet="Booking" />
+            <End Role="Payment" EntitySet="Payment" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renter__UserID__4BAC3F29" Association="Self.FK__Renter__UserID__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Renter" EntitySet="Renter" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__CarLi__619B8048" Association="Self.FK__ReviewRat__CarLi__619B8048">
+            <End Role="CarListing" EntitySet="CarListing" />
+            <End Role="ReviewRating" EntitySet="ReviewRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__CarOw__5FB337D6" Association="Self.FK__ReviewRat__CarOw__5FB337D6">
+            <End Role="CarOwner" EntitySet="CarOwner" />
+            <End Role="ReviewRating" EntitySet="ReviewRating" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__Rente__60A75C0F" Association="Self.FK__ReviewRat__Rente__60A75C0F">
+            <End Role="Renter" EntitySet="Renter" />
+            <End Role="ReviewRating" EntitySet="ReviewRating" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SnapDriveDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AdminUserRole">
+          <Key>
+            <PropertyRef Name="RoleID" />
+          </Key>
+          <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Booking">
+          <Key>
+            <PropertyRef Name="BookingID" />
+          </Key>
+          <Property Name="BookingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RenterID" Type="Int32" />
+          <Property Name="CarListingID" Type="Int32" />
+          <Property Name="BookingDate" Type="DateTime" Precision="3" />
+          <Property Name="RentalPeriodStart" Type="DateTime" Precision="3" />
+          <Property Name="RentalPeriodEnd" Type="DateTime" Precision="3" />
+          <Property Name="TotalCost" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CarListing" Relationship="Self.FK__Booking__CarList__59FA5E80" FromRole="Booking" ToRole="CarListing" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__Booking__RenterI__59063A47" FromRole="Booking" ToRole="Renter" />
+          <NavigationProperty Name="Insurances" Relationship="Self.FK__Insurance__Booki__6477ECF3" FromRole="Booking" ToRole="Insurance" />
+          <NavigationProperty Name="Payments" Relationship="Self.FK__Payment__Booking__5CD6CB2B" FromRole="Booking" ToRole="Payment" />
+        </EntityType>
+        <EntityType Name="CarListing">
+          <Key>
+            <PropertyRef Name="CarListingID" />
+          </Key>
+          <Property Name="CarListingID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarOwnerID" Type="Int32" />
+          <Property Name="Make" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Model" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Year" Type="Int32" />
+          <Property Name="Mileage" Type="Int32" />
+          <Property Name="RentalPrice" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="AvailabilitySchedule" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="LocationLatitude" Type="Decimal" Precision="10" Scale="8" />
+          <Property Name="LocationLongitude" Type="Decimal" Precision="11" Scale="8" />
+          <Property Name="Description" Type="String" MaxLength="1000" FixedLength="false" Unicode="false" />
+          <Property Name="CarImage" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__CarList__59FA5E80" FromRole="CarListing" ToRole="Booking" />
+          <NavigationProperty Name="CarOwner" Relationship="Self.FK__CarListin__CarOw__5629CD9C" FromRole="CarListing" ToRole="CarOwner" />
+          <NavigationProperty Name="ReviewRatings" Relationship="Self.FK__ReviewRat__CarLi__619B8048" FromRole="CarListing" ToRole="ReviewRating" />
+        </EntityType>
+        <EntityType Name="CarOwner">
+          <Key>
+            <PropertyRef Name="CarOwnerID" />
+          </Key>
+          <Property Name="CarOwnerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DriverLicenseNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountDetails" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="VerificationStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CarListings" Relationship="Self.FK__CarListin__CarOw__5629CD9C" FromRole="CarOwner" ToRole="CarListing" />
+          <NavigationProperty Name="User" Relationship="Self.FK__CarOwner__UserID__52593CB8" FromRole="CarOwner" ToRole="Users" />
+          <NavigationProperty Name="ReviewRatings" Relationship="Self.FK__ReviewRat__CarOw__5FB337D6" FromRole="CarOwner" ToRole="ReviewRating" />
+        </EntityType>
+        <EntityType Name="Communication">
+          <Key>
+            <PropertyRef Name="MessageID" />
+          </Key>
+          <Property Name="MessageID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SenderID" Type="Int32" />
+          <Property Name="RecipientID" Type="Int32" />
+          <Property Name="MessageContent" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <Property Name="MessageStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Communica__Recip__68487DD7" FromRole="Communication" ToRole="Users" />
+          <NavigationProperty Name="User1" Relationship="Self.FK__Communica__Sende__6754599E" FromRole="Communication" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Insurance">
+          <Key>
+            <PropertyRef Name="InsuranceID" />
+          </Key>
+          <Property Name="InsuranceID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="CoverageDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Cost" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="StartDate" Type="DateTime" Precision="3" />
+          <Property Name="EndDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__Insurance__Booki__6477ECF3" FromRole="Insurance" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="LocationGeoData">
+          <Key>
+            <PropertyRef Name="LocationID" />
+          </Key>
+          <Property Name="LocationID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Latitude" Type="Decimal" Precision="10" Scale="8" />
+          <Property Name="Longitude" Type="Decimal" Precision="11" Scale="8" />
+          <Property Name="City" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RegionState" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Country" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="LogsAuditTrail">
+          <Key>
+            <PropertyRef Name="LogID" />
+          </Key>
+          <Property Name="LogID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="Action" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Timestamp" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="User" Relationship="Self.FK__LogsAudit__UserI__6EF57B66" FromRole="LogsAuditTrails" ToRole="Users" />
+        </EntityType>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="PaymentID" />
+          </Key>
+          <Property Name="PaymentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BookingID" Type="Int32" />
+          <Property Name="Amount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="PaymentDate" Type="DateTime" Precision="3" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="TransactionID" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Booking" Relationship="Self.FK__Payment__Booking__5CD6CB2B" FromRole="Payment" ToRole="Booking" />
+        </EntityType>
+        <EntityType Name="Renter">
+          <Key>
+            <PropertyRef Name="RenterID" />
+          </Key>
+          <Property Name="RenterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserID" Type="Int32" />
+          <Property Name="DriverLicenseNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="PaymentMethod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="BankAccountDetails" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="VerificationStatus" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Bookings" Relationship="Self.FK__Booking__RenterI__59063A47" FromRole="Renter" ToRole="Booking" />
+          <NavigationProperty Name="User" Relationship="Self.FK__Renter__UserID__4BAC3F29" FromRole="Renter" ToRole="Users" />
+          <NavigationProperty Name="ReviewRatings" Relationship="Self.FK__ReviewRat__Rente__60A75C0F" FromRole="Renter" ToRole="ReviewRating" />
+        </EntityType>
+        <EntityType Name="ReviewRating">
+          <Key>
+            <PropertyRef Name="ReviewID" />
+          </Key>
+          <Property Name="ReviewID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CarOwnerID" Type="Int32" />
+          <Property Name="RenterID" Type="Int32" />
+          <Property Name="CarListingID" Type="Int32" />
+          <Property Name="Rating" Type="Int32" />
+          <Property Name="Comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Date" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CarListing" Relationship="Self.FK__ReviewRat__CarLi__619B8048" FromRole="ReviewRating" ToRole="CarListing" />
+          <NavigationProperty Name="CarOwner" Relationship="Self.FK__ReviewRat__CarOw__5FB337D6" FromRole="ReviewRating" ToRole="CarOwner" />
+          <NavigationProperty Name="Renter" Relationship="Self.FK__ReviewRat__Rente__60A75C0F" FromRole="ReviewRating" ToRole="Renter" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="UserID" />
+          </Key>
+          <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PhoneNumber" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Address" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ProfilePicture" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RegistrationDate" Type="DateTime" Precision="3" />
+          <Property Name="UserType" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CarOwners" Relationship="Self.FK__CarOwner__UserID__52593CB8" FromRole="Users" ToRole="CarOwner" />
+          <NavigationProperty Name="Communications" Relationship="Self.FK__Communica__Recip__68487DD7" FromRole="Users" ToRole="Communication" />
+          <NavigationProperty Name="Communications1" Relationship="Self.FK__Communica__Sende__6754599E" FromRole="Users" ToRole="Communication" />
+          <NavigationProperty Name="LogsAuditTrails" Relationship="Self.FK__LogsAudit__UserI__6EF57B66" FromRole="Users" ToRole="LogsAuditTrails" />
+          <NavigationProperty Name="Renters" Relationship="Self.FK__Renter__UserID__4BAC3F29" FromRole="Users" ToRole="Renter" />
+        </EntityType>
+        <Association Name="FK__Booking__CarList__59FA5E80">
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarListing">
+              <PropertyRef Name="CarListingID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="CarListingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Booking__RenterI__59063A47">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="Booking" Type="Self.Booking" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RenterID" />
+            </Principal>
+            <Dependent Role="Booking">
+              <PropertyRef Name="RenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Insurance__Booki__6477ECF3">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="Insurance" Type="Self.Insurance" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="Insurance">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Payment__Booking__5CD6CB2B">
+          <End Role="Booking" Type="Self.Booking" Multiplicity="0..1" />
+          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Booking">
+              <PropertyRef Name="BookingID" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="BookingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarListin__CarOw__5629CD9C">
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="0..1" />
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwner">
+              <PropertyRef Name="CarOwnerID" />
+            </Principal>
+            <Dependent Role="CarListing">
+              <PropertyRef Name="CarOwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__CarLi__619B8048">
+          <End Role="CarListing" Type="Self.CarListing" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarListing">
+              <PropertyRef Name="CarListingID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="CarListingID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CarOwner__UserID__52593CB8">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="CarOwner">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__CarOw__5FB337D6">
+          <End Role="CarOwner" Type="Self.CarOwner" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CarOwner">
+              <PropertyRef Name="CarOwnerID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="CarOwnerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Communica__Recip__68487DD7">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Communication" Type="Self.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="RecipientID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Communica__Sende__6754599E">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Communication" Type="Self.Communication" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Communication">
+              <PropertyRef Name="SenderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__LogsAudit__UserI__6EF57B66">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="LogsAuditTrails" Type="Self.LogsAuditTrail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="LogsAuditTrails">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Renter__UserID__4BAC3F29">
+          <End Role="Users" Type="Self.User" Multiplicity="0..1" />
+          <End Role="Renter" Type="Self.Renter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Users">
+              <PropertyRef Name="UserID" />
+            </Principal>
+            <Dependent Role="Renter">
+              <PropertyRef Name="UserID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ReviewRat__Rente__60A75C0F">
+          <End Role="Renter" Type="Self.Renter" Multiplicity="0..1" />
+          <End Role="ReviewRating" Type="Self.ReviewRating" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Renter">
+              <PropertyRef Name="RenterID" />
+            </Principal>
+            <Dependent Role="ReviewRating">
+              <PropertyRef Name="RenterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SnapDriveDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AdminUserRoles" EntityType="Self.AdminUserRole" />
+          <EntitySet Name="Bookings" EntityType="Self.Booking" />
+          <EntitySet Name="CarListings" EntityType="Self.CarListing" />
+          <EntitySet Name="CarOwners" EntityType="Self.CarOwner" />
+          <EntitySet Name="Communications" EntityType="Self.Communication" />
+          <EntitySet Name="Insurances" EntityType="Self.Insurance" />
+          <EntitySet Name="LocationGeoDatas" EntityType="Self.LocationGeoData" />
+          <EntitySet Name="LogsAuditTrails" EntityType="Self.LogsAuditTrail" />
+          <EntitySet Name="Payments" EntityType="Self.Payment" />
+          <EntitySet Name="Renters" EntityType="Self.Renter" />
+          <EntitySet Name="ReviewRatings" EntityType="Self.ReviewRating" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK__Booking__CarList__59FA5E80" Association="Self.FK__Booking__CarList__59FA5E80">
+            <End Role="CarListing" EntitySet="CarListings" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Booking__RenterI__59063A47" Association="Self.FK__Booking__RenterI__59063A47">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="Booking" EntitySet="Bookings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Insurance__Booki__6477ECF3" Association="Self.FK__Insurance__Booki__6477ECF3">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Insurance" EntitySet="Insurances" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Payment__Booking__5CD6CB2B" Association="Self.FK__Payment__Booking__5CD6CB2B">
+            <End Role="Booking" EntitySet="Bookings" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarListin__CarOw__5629CD9C" Association="Self.FK__CarListin__CarOw__5629CD9C">
+            <End Role="CarOwner" EntitySet="CarOwners" />
+            <End Role="CarListing" EntitySet="CarListings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__CarLi__619B8048" Association="Self.FK__ReviewRat__CarLi__619B8048">
+            <End Role="CarListing" EntitySet="CarListings" />
+            <End Role="ReviewRating" EntitySet="ReviewRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CarOwner__UserID__52593CB8" Association="Self.FK__CarOwner__UserID__52593CB8">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="CarOwner" EntitySet="CarOwners" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__CarOw__5FB337D6" Association="Self.FK__ReviewRat__CarOw__5FB337D6">
+            <End Role="CarOwner" EntitySet="CarOwners" />
+            <End Role="ReviewRating" EntitySet="ReviewRatings" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Communica__Recip__68487DD7" Association="Self.FK__Communica__Recip__68487DD7">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Communication" EntitySet="Communications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Communica__Sende__6754599E" Association="Self.FK__Communica__Sende__6754599E">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Communication" EntitySet="Communications" />
+          </AssociationSet>
+          <AssociationSet Name="FK__LogsAudit__UserI__6EF57B66" Association="Self.FK__LogsAudit__UserI__6EF57B66">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="LogsAuditTrails" EntitySet="LogsAuditTrails" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Renter__UserID__4BAC3F29" Association="Self.FK__Renter__UserID__4BAC3F29">
+            <End Role="Users" EntitySet="Users" />
+            <End Role="Renter" EntitySet="Renters" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ReviewRat__Rente__60A75C0F" Association="Self.FK__ReviewRat__Rente__60A75C0F">
+            <End Role="Renter" EntitySet="Renters" />
+            <End Role="ReviewRating" EntitySet="ReviewRatings" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SnapDriveDBModelStoreContainer" CdmEntityContainer="SnapDriveDBEntities">
+          <EntitySetMapping Name="AdminUserRoles">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.AdminUserRole">
+              <MappingFragment StoreEntitySet="AdminUserRoles">
+                <ScalarProperty Name="RoleID" ColumnName="RoleID" />
+                <ScalarProperty Name="RoleName" ColumnName="RoleName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Bookings">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.Booking">
+              <MappingFragment StoreEntitySet="Booking">
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="RenterID" ColumnName="RenterID" />
+                <ScalarProperty Name="CarListingID" ColumnName="CarListingID" />
+                <ScalarProperty Name="BookingDate" ColumnName="BookingDate" />
+                <ScalarProperty Name="RentalPeriodStart" ColumnName="RentalPeriodStart" />
+                <ScalarProperty Name="RentalPeriodEnd" ColumnName="RentalPeriodEnd" />
+                <ScalarProperty Name="TotalCost" ColumnName="TotalCost" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarListings">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.CarListing">
+              <MappingFragment StoreEntitySet="CarListing">
+                <ScalarProperty Name="CarListingID" ColumnName="CarListingID" />
+                <ScalarProperty Name="CarOwnerID" ColumnName="CarOwnerID" />
+                <ScalarProperty Name="Make" ColumnName="Make" />
+                <ScalarProperty Name="Model" ColumnName="Model" />
+                <ScalarProperty Name="Year" ColumnName="Year" />
+                <ScalarProperty Name="Mileage" ColumnName="Mileage" />
+                <ScalarProperty Name="RentalPrice" ColumnName="RentalPrice" />
+                <ScalarProperty Name="AvailabilitySchedule" ColumnName="AvailabilitySchedule" />
+                <ScalarProperty Name="LocationLatitude" ColumnName="LocationLatitude" />
+                <ScalarProperty Name="LocationLongitude" ColumnName="LocationLongitude" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CarImage" ColumnName="CarImage" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CarOwners">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.CarOwner">
+              <MappingFragment StoreEntitySet="CarOwner">
+                <ScalarProperty Name="CarOwnerID" ColumnName="CarOwnerID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DriverLicenseNumber" ColumnName="DriverLicenseNumber" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="BankAccountDetails" ColumnName="BankAccountDetails" />
+                <ScalarProperty Name="VerificationStatus" ColumnName="VerificationStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Communications">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.Communication">
+              <MappingFragment StoreEntitySet="Communication">
+                <ScalarProperty Name="MessageID" ColumnName="MessageID" />
+                <ScalarProperty Name="SenderID" ColumnName="SenderID" />
+                <ScalarProperty Name="RecipientID" ColumnName="RecipientID" />
+                <ScalarProperty Name="MessageContent" ColumnName="MessageContent" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+                <ScalarProperty Name="MessageStatus" ColumnName="MessageStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Insurances">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.Insurance">
+              <MappingFragment StoreEntitySet="Insurance">
+                <ScalarProperty Name="InsuranceID" ColumnName="InsuranceID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="CoverageDetails" ColumnName="CoverageDetails" />
+                <ScalarProperty Name="Cost" ColumnName="Cost" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LocationGeoDatas">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.LocationGeoData">
+              <MappingFragment StoreEntitySet="LocationGeoData">
+                <ScalarProperty Name="LocationID" ColumnName="LocationID" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="RegionState" ColumnName="RegionState" />
+                <ScalarProperty Name="Country" ColumnName="Country" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LogsAuditTrails">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.LogsAuditTrail">
+              <MappingFragment StoreEntitySet="LogsAuditTrails">
+                <ScalarProperty Name="LogID" ColumnName="LogID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Action" ColumnName="Action" />
+                <ScalarProperty Name="Timestamp" ColumnName="Timestamp" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="PaymentID" ColumnName="PaymentID" />
+                <ScalarProperty Name="BookingID" ColumnName="BookingID" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+                <ScalarProperty Name="PaymentDate" ColumnName="PaymentDate" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="TransactionID" ColumnName="TransactionID" />
+                <ScalarProperty Name="PaymentStatus" ColumnName="PaymentStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Renters">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.Renter">
+              <MappingFragment StoreEntitySet="Renter">
+                <ScalarProperty Name="RenterID" ColumnName="RenterID" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="DriverLicenseNumber" ColumnName="DriverLicenseNumber" />
+                <ScalarProperty Name="PaymentMethod" ColumnName="PaymentMethod" />
+                <ScalarProperty Name="BankAccountDetails" ColumnName="BankAccountDetails" />
+                <ScalarProperty Name="VerificationStatus" ColumnName="VerificationStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReviewRatings">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.ReviewRating">
+              <MappingFragment StoreEntitySet="ReviewRating">
+                <ScalarProperty Name="ReviewID" ColumnName="ReviewID" />
+                <ScalarProperty Name="CarOwnerID" ColumnName="CarOwnerID" />
+                <ScalarProperty Name="RenterID" ColumnName="RenterID" />
+                <ScalarProperty Name="CarListingID" ColumnName="CarListingID" />
+                <ScalarProperty Name="Rating" ColumnName="Rating" />
+                <ScalarProperty Name="Comment" ColumnName="Comment" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="SnapDriveDBModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="ProfilePicture" ColumnName="ProfilePicture" />
+                <ScalarProperty Name="RegistrationDate" ColumnName="RegistrationDate" />
+                <ScalarProperty Name="UserType" ColumnName="UserType" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

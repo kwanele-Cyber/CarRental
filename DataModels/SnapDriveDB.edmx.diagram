@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="63d4a453128f4f6eb46053a72391d4b6" Name="Diagram1">
+        <EntityTypeShape EntityType="SnapDriveDBModel.AdminUserRole" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.Booking" Width="1.5" PointX="7.5" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.CarListing" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.CarOwner" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.Communication" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.Insurance" Width="1.5" PointX="9.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.LocationGeoData" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.LogsAuditTrail" Width="1.5" PointX="3" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.Payment" Width="1.5" PointX="9.75" PointY="12.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.Renter" Width="1.5" PointX="3" PointY="15.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.ReviewRating" Width="1.5" PointX="10.5" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.sysdiagram" Width="1.5" PointX="4.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SnapDriveDBModel.User" Width="1.5" PointX="0.75" PointY="9.125" IsExpanded="true" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Booking__CarList__59FA5E80" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Booking__RenterI__59063A47" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Insurance__Booki__6477ECF3" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Payment__Booking__5CD6CB2B" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__CarListin__CarOw__5629CD9C" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__ReviewRat__CarLi__619B8048" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__CarOwner__UserID__52593CB8" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__ReviewRat__CarOw__5FB337D6" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Communica__Recip__68487DD7" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Communica__Sende__6754599E" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__LogsAudit__UserI__6EF57B66" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__Renter__UserID__4BAC3F29" ManuallyRouted="false" />
+        <AssociationConnector Association="SnapDriveDBModel.FK__ReviewRat__Rente__60A75C0F" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
